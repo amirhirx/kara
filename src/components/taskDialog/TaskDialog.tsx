@@ -1,6 +1,6 @@
 import type { ITask } from "../../types/task"
 
-export default function TaskModal({
+export default function TaskDialog({
     title,
     task,
     setTask,

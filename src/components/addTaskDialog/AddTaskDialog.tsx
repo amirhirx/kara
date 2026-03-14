@@ -2,13 +2,13 @@ import { useContext, useState } from "react"
 import { TodoContext } from "../../contexts/todoContext"
 import { nanoid } from "nanoid"
 import type { ITask } from "../../types/task"
-import TaskModal from "./TaskModal"
+import TaskDialog from "../taskDialog/TaskDialog"
 
-interface IAddTaskModal {
-    closeModal: () => void
+interface IAddTaskDialog {
+    closeDialog: () => void
 }
 
-function AddTaskModal({ closeModal }: IAddTaskModal) {
+export default function AddTaskDialog({ closeDialog }: IAddTaskDialog) {
     const { newTask } = useContext(TodoContext)
 
     const [newTaskObj, setNewTaskObj] = useState<ITask>({
@@ -20,7 +20,7 @@ function AddTaskModal({ closeModal }: IAddTaskModal) {
 
     const addNewTask = () => {
         newTask(newTaskObj)
-        closeModal()
+        closeDialog()
     }
 
     const addTaskWithEnter = (event: { code: string }) => {
@@ -30,16 +30,14 @@ function AddTaskModal({ closeModal }: IAddTaskModal) {
     }
 
     return (
-        <TaskModal
+        <TaskDialog
             title={"کار جدید"}
             task={newTaskObj}
             setTask={setNewTaskObj}
             clickHandlerText={"افزودن"}
             clickHandler={addNewTask}
-            closeHandler={closeModal}
+            closeHandler={closeDialog}
             keyDownHandler={addTaskWithEnter}
         />
     )
 }
-
-export default AddTaskModal

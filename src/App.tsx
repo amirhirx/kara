@@ -1,22 +1,20 @@
 import { useContext, useState } from "react"
-import Menu from "./components/Menu"
+import { Menu, AddTaskDialog, TasksContainer } from "./components/"
 import { TodoContext } from "./contexts/todoContext"
-import TasksContainer from "./components/TasksContainer"
-import AddTaskModal from "./components/modals/AddTaskModal"
 
 function App() {
     const { todo } = useContext(TodoContext)
 
-    const [showNewTaskModal, setShowNewModal] = useState(false)
+    const [showNewTaskDialog, setShowNewDialog] = useState(false)
 
-    const openNewTaskModal = () => setShowNewModal(true)
-    const closeNewTaskModal = () => setShowNewModal(false)
+    const openNewTaskDialog = () => setShowNewDialog(true)
+    const closeNewTaskDialog = () => setShowNewDialog(false)
 
     return (
         <>
-            <Menu toggleShowAddTaskModal={openNewTaskModal} />
-            {showNewTaskModal ? (
-                <AddTaskModal closeModal={closeNewTaskModal} />
+            <Menu toggleShowAddTaskDialog={openNewTaskDialog} />
+            {showNewTaskDialog ? (
+                <AddTaskDialog closeDialog={closeNewTaskDialog} />
             ) : null}
             <TasksContainer tasks={todo} />
         </>

@@ -1,10 +1,10 @@
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid"
 import { useContext, useState } from "react"
-import { TodoContext } from "../contexts/todoContext"
-import EditTaskModal from "./modals/EditTaskModal"
+import { TodoContext } from "../../contexts/todoContext"
 import { CheckCircleIcon as CheckCircleOutline } from "@heroicons/react/24/outline"
 import { CheckCircleIcon as CheckCircleSolid } from "@heroicons/react/24/solid"
-import type { ITask } from "../types/task"
+import type { ITask } from "../../types/task"
+import { EditTaskDialog } from ".."
 
 function Task({ id, flag, title, text }: ITask) {
     const { removeTask, toggleTaskFlag } = useContext(TodoContext)
@@ -15,16 +15,16 @@ function Task({ id, flag, title, text }: ITask) {
         setTimeout(() => removeTask(id), 300)
     }
 
-    const [showEditTaskModal, setShowEditTaskModal] = useState(false)
+    const [showEditTaskDialog, setShowEditTaskDialog] = useState(false)
     return (
         <>
-            {showEditTaskModal && (
-                <EditTaskModal
+            {showEditTaskDialog && (
+                <EditTaskDialog
                     id={id}
                     flag={flag}
                     title={title}
                     text={text}
-                    closeModal={() => setShowEditTaskModal(false)}
+                    closeDialog={() => setShowEditTaskDialog(false)}
                 />
             )}
             <div
@@ -55,7 +55,7 @@ function Task({ id, flag, title, text }: ITask) {
                     <div className="flex items-center gap-1">
                         <PencilSquareIcon
                             className="h-5 w-5 text-[var(--text-color)] transition active:scale-90"
-                            onClick={() => setShowEditTaskModal(true)}
+                            onClick={() => setShowEditTaskDialog(true)}
                         />
                         <TrashIcon
                             className="h-5 w-5 text-[var(--text-color)] transition active:scale-90"

@@ -1,5 +1,5 @@
-import type { ITask } from "../types/task"
-import Task from "./Task"
+import type { ITask } from "../../types/task"
+import { Task } from ".."
 
 export default function TasksContainer({ tasks }: { tasks: ITask[] }) {
     return (

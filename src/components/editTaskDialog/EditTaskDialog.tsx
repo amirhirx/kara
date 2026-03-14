@@ -2,17 +2,23 @@ import { useContext } from "react"
 import { TodoContext } from "../../contexts/todoContext"
 import { useState } from "react"
 import type { ITask } from "../../types/task"
-import TaskModal from "./TaskModal"
+import TaskDialog from "../taskDialog/TaskDialog"
 
-interface IEditTaskModal {
+interface IEditTaskDialog {
     id: string
     flag: boolean
     title: string
     text: string
-    closeModal: () => void
+    closeDialog: () => void
 }
 
-function EditTaskModal({ id, flag, title, text, closeModal }: IEditTaskModal) {
+export default function EditTaskDialog({
+    id,
+    flag,
+    title,
+    text,
+    closeDialog,
+}: IEditTaskDialog) {
     const { editTask } = useContext(TodoContext)
 
     const [task, setTask] = useState<ITask>({
@@ -24,7 +30,7 @@ function EditTaskModal({ id, flag, title, text, closeModal }: IEditTaskModal) {
 
     const editTaskHandler = () => {
         editTask(task)
-        closeModal()
+        closeDialog()
     }
 
     const editTaskWithEnter = (event: { code: string }) => {
@@ -34,16 +40,14 @@ function EditTaskModal({ id, flag, title, text, closeModal }: IEditTaskModal) {
     }
 
     return (
-        <TaskModal
+        <TaskDialog
             title="ویرایش کار"
             task={task}
             setTask={setTask}
             clickHandlerText={"ویرایش"}
             clickHandler={editTaskHandler}
-            closeHandler={closeModal}
+            closeHandler={closeDialog}
             keyDownHandler={editTaskWithEnter}
         />
     )
 }
-
-export default EditTaskModal

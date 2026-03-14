@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { ThemeContext } from "../contexts/themeContext"
+import { ThemeContext } from "../../contexts/themeContext"
 import { MoonIcon, SunIcon } from "@heroicons/react/24/solid"
 
 export default function ThemeToggleButton() {

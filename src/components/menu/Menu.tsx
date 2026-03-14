@@ -3,10 +3,10 @@ import type { MouseEventHandler } from "react"
 import ThemeToggleButton from "./ThemeToggleButton"
 
 interface IMenu {
-    toggleShowAddTaskModal: MouseEventHandler
+    toggleShowAddTaskDialog: MouseEventHandler
 }
 
-function Menu({ toggleShowAddTaskModal }: IMenu) {
+function Menu({ toggleShowAddTaskDialog }: IMenu) {
     return (
         <nav className="bg-[var(--primary-color)] py-2.5 px-8 flex items-center justify-between shadow border border-[var(--secondary-color)]">
             <h1 className="text-2xl font-black text-[var(--text-color)]">
@@ -15,7 +15,7 @@ function Menu({ toggleShowAddTaskModal }: IMenu) {
             <div className="flex items-center gap-4">
                 <ThemeToggleButton />
                 <button
-                    onClick={toggleShowAddTaskModal}
+                    onClick={toggleShowAddTaskDialog}
                     className="bg-blue-400 text-white font-bold md:py-2 md:px-3 p-1.5 rounded-md transition active:scale-95 active:bg-blue-500 flex items-center"
                 >
                     <span className="hidden md:inline">کار جدید</span>
