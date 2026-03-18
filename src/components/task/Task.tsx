@@ -29,25 +29,27 @@ function Task({ id, flag, title, text }: ITask) {
             )}
             <div
                 id={id}
-                className={`shadow border-2 border-[var(--secondary-color)] bg-[var(--primary-color)] m-4 p-4 rounded-md transition ${
+                className={`shadow border border-[var(--secondary-color)] bg-[var(--primary-color)] m-4 p-4 rounded-xl transition ${
                     flag && "line-through opacity-45"
                 } ${isRemoving && "opacity-0 scale-50"}`}
             >
                 <div className="flex items-center justify-between">
                     <div className="flex item-center gap-1">
-                        {flag ? (
-                            <CheckCircleOutline
-                                className="h-5 w-5 text-[var(--text-color)] transition active:scale-90"
-                                onClick={() => toggleTaskFlag(id)}
-                            />
-                        ) : (
-                            <CheckCircleSolid
-                                className="h-5 w-5 text-[var(--text-color)] transition active:scale-90"
-                                onClick={() => toggleTaskFlag(id)}
-                            />
-                        )}
+                        <div className="w-max">
+                            {flag ? (
+                                <CheckCircleOutline
+                                    className="h-5 w-5 text-[var(--text-color)] transition active:scale-90"
+                                    onClick={() => toggleTaskFlag(id)}
+                                />
+                            ) : (
+                                <CheckCircleSolid
+                                    className="h-5 w-5 text-[var(--text-color)] transition active:scale-90"
+                                    onClick={() => toggleTaskFlag(id)}
+                                />
+                            )}
+                        </div>
                         <h3
-                            className={` text-xl font-bold text-[var(--text-color)]`}
+                            className={`text-xl font-bold text-[var(--text-color)] line-clamp-1`}
                         >
                             {title}
                         </h3>
@@ -63,7 +65,7 @@ function Task({ id, flag, title, text }: ITask) {
                         />
                     </div>
                 </div>
-                <p className="text-[var(--text-color)]">{text}</p>
+                <p className="text-[var(--text-color)] line-clamp-3">{text}</p>
             </div>
         </>
     )
