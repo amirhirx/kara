@@ -1,24 +1,15 @@
-import { useContext, useState } from "react"
-import { Menu, AddTaskDialog, TasksContainer } from "./components/"
-import { TodoContext } from "./contexts/todoContext"
+import { Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
 
 function App() {
-    const { todo } = useContext(TodoContext)
-
-    const [showNewTaskDialog, setShowNewDialog] = useState(false)
-
-    const openNewTaskDialog = () => setShowNewDialog(true)
-    const closeNewTaskDialog = () => setShowNewDialog(false)
-
     return (
-        <>
-            <Menu toggleShowAddTaskDialog={openNewTaskDialog} />
-            {showNewTaskDialog ? (
-                <AddTaskDialog closeDialog={closeNewTaskDialog} />
-            ) : null}
-            <TasksContainer tasks={todo} />
-        </>
-    )
+        <Routes>
+            <Route
+                path="/"
+                element={<Home />}
+            />
+        </Routes>
+    );
 }
 
-export default App
+export default App;
