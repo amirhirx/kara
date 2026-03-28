@@ -1,29 +1,36 @@
-import { PlusIcon } from "@heroicons/react/24/solid"
-import type { MouseEventHandler } from "react"
-import ThemeToggleButton from "./ThemeToggleButton"
+import { PlusIcon } from "@heroicons/react/24/solid";
+import { useState } from "react";
+import ThemeToggleButton from "./ThemeToggleButton";
+import AddTaskDialog from "../addTaskDialog/AddTaskDialog";
+import { Link } from "react-router-dom";
 
-interface IMenu {
-    toggleShowAddTaskDialog: MouseEventHandler
-}
+function Menu() {
+    const [showNewTaskDialog, setShowNewDialog] = useState(false);
 
-function Menu({ toggleShowAddTaskDialog }: IMenu) {
+    const toggleNewTaskDialog = () => setShowNewDialog((prev) => !prev);
     return (
         <nav className="bg-[var(--primary-color)] py-2.5 px-8 flex items-center justify-between shadow border border-[var(--secondary-color)]">
-            <h1 className="text-2xl font-black text-[var(--text-color)]">
+            <Link
+                to={"/"}
+                className="text-2xl font-black text-[var(--text-color)] select-none"
+            >
                 تودو
-            </h1>
+            </Link>
             <div className="flex items-center gap-4">
                 <ThemeToggleButton />
                 <button
-                    onClick={toggleShowAddTaskDialog}
-                    className="bg-blue-400 text-white font-black md:py-2 md:px-3 p-1.5 rounded-lg transition active:scale-95 active:bg-blue-500 flex items-center text-sm"
+                    onClick={toggleNewTaskDialog}
+                    className="bg-blue-400 text-white font-black md:py-2 md:px-3 p-1.5 rounded-lg transition active:scale-95 active:bg-blue-500 flex items-center text-sm select-none"
                 >
                     <span className="hidden md:inline">کار جدید</span>
                     <PlusIcon className="h-5 w-5 text-white md:mr-2" />
                 </button>
+                {showNewTaskDialog ? (
+                    <AddTaskDialog closeDialog={toggleNewTaskDialog} />
+                ) : null}
             </div>
         </nav>
-    )
+    );
 }
 
-export default Menu
+export default Menu;
