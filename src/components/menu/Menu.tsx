@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 function Menu() {
     const [showNewTaskDialog, setShowNewDialog] = useState(false);
+    // TODO: show new task dialog with shorcuts
 
     const toggleNewTaskDialog = () => setShowNewDialog((prev) => !prev);
     return (
@@ -18,13 +19,14 @@ function Menu() {
             </Link>
             <div className="flex items-center gap-4">
                 <ThemeToggleButton />
-                <button
-                    onClick={toggleNewTaskDialog}
+                <Link
+                    to={"/new"}
                     className="bg-blue-400 text-white font-black md:py-2 md:px-3 p-1.5 rounded-lg transition active:scale-95 active:bg-blue-500 flex items-center text-sm select-none"
                 >
                     <span className="hidden md:inline">کار جدید</span>
                     <PlusIcon className="h-5 w-5 text-white md:mr-2" />
-                </button>
+                </Link>
+
                 {showNewTaskDialog ? (
                     <AddTaskDialog closeDialog={toggleNewTaskDialog} />
                 ) : null}
