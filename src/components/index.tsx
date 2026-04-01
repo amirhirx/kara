@@ -4,5 +4,14 @@ import TasksContainer from "./tasksContainer/TasksContainer";
 import AddTaskDialog from "./addTaskDialog/AddTaskDialog";
 import EditTaskDialog from "./editTaskDialog/EditTaskDialog";
 import TaskForm from "./taskForm/TaskForm";
+import Button from "./ui/button/Button";
 
-export { Menu, Task, TasksContainer, AddTaskDialog, EditTaskDialog, TaskForm };
+export {
+    Menu,
+    Task,
+    TasksContainer,
+    AddTaskDialog,
+    EditTaskDialog,
+    TaskForm,
+    Button,
+};
