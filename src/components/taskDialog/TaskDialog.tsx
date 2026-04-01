@@ -1,4 +1,5 @@
-import type { ITask } from "../../types/task"
+import type { ITask } from "../../types/task";
+import { Button } from "..";
 
 export default function TaskDialog({
     title,
@@ -9,13 +10,13 @@ export default function TaskDialog({
     closeHandler,
     keyDownHandler,
 }: {
-    title: string
-    task: ITask
-    setTask: React.Dispatch<React.SetStateAction<ITask>>
-    clickHandlerText: string
-    clickHandler: () => void
-    closeHandler: () => void
-    keyDownHandler: (event: { code: string }) => void
+    title: string;
+    task: ITask;
+    setTask: React.Dispatch<React.SetStateAction<ITask>>;
+    clickHandlerText: string;
+    clickHandler: () => void;
+    closeHandler: () => void;
+    keyDownHandler: (event: { code: string }) => void;
 }) {
     return (
         <div className="w-full h-full backdrop-blur-xs bg-black/35 fixed top-0 left-0 flex items-center justify-center z-10">
@@ -38,8 +39,8 @@ export default function TaskDialog({
                         value={task.title}
                         onChange={(event) => {
                             setTask((prev) => {
-                                return { ...prev, title: event?.target.value }
-                            })
+                                return { ...prev, title: event?.target.value };
+                            });
                         }}
                         onKeyDown={keyDownHandler}
                         autoFocus
@@ -60,24 +61,19 @@ export default function TaskDialog({
                         value={task.text}
                         onChange={(event) => {
                             setTask((prev) => {
-                                return { ...prev, text: event?.target.value }
-                            })
+                                return { ...prev, text: event?.target.value };
+                            });
                         }}
                     ></textarea>
                 </div>
-                <button
+                <Button
                     onClick={clickHandler}
-                    className="bg-green-500 text-white font-bold py-2 px-4 mt-2 text-sm rounded-md cursor-pointer transition active:bg-green-600 active:scale-95"
+                    variant="primary"
                 >
                     {clickHandlerText}
-                </button>
-                <button
-                    className="m-2 text-[var(--text-color)] cursor-pointer"
-                    onClick={closeHandler}
-                >
-                    بستن
-                </button>
+                </Button>
+                <Button onClick={closeHandler}>بستن</Button>
             </div>
         </div>
-    )
+    );
 }

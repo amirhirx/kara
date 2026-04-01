@@ -1,3 +1,4 @@
+import { Button } from "..";
 import type { ITask } from "../../types/task";
 
 export default function TaskForm({
@@ -54,12 +55,12 @@ export default function TaskForm({
                 />
             </div>
             <div className="py-2">
-                <button
-                    className="py-2 px-4 rounded-lg font-bold bg-green-500 text-white cursor-pointer transition active:bg-green-600 active:scale-95"
+                <Button
+                    variant="primary"
                     onClick={onClick}
                 >
                     {clickLabel}
-                </button>
+                </Button>
             </div>
         </div>
     );
