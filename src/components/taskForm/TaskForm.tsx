@@ -26,13 +26,14 @@ export default function TaskForm({
                 </label>
                 <input
                     type="text"
-                    name="task-description"
-                    id="task-description"
+                    name="task-title"
+                    id="task-title"
                     value={task.title}
                     onChange={(e) =>
                         updateTask({ ...task, title: e.target.value })
                     }
                     className="p-2 rounded-lg text-xl border bg-[var(--primary-color)] border-[var(--secondary-color)] outline-none shadow"
+                    placeholder="عنوان را وارد کنید..."
                 />
             </div>
             <div className="flex flex-col">
@@ -51,6 +52,7 @@ export default function TaskForm({
                     onChange={(e) =>
                         updateTask({ ...task, text: e.target.value })
                     }
+                    placeholder="توضیحات را وارد کنید..."
                     className="p-2 min-h-14 h-40 max-h-80 rounded-lg border bg-[var(--primary-color)] border-[var(--secondary-color)] outline-none shadow"
                 />
             </div>
