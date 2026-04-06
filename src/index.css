@@ -24,6 +24,11 @@ body {
     transition: 0.3s all;
 }
 
+*::selection {
+    color: #fff;
+    background: #3670b1;
+}
+
 .popup-animation {
     animation: introScale 0.15s;
 }
