@@ -12,7 +12,7 @@ function Menu() {
                 to={"/"}
                 className="text-2xl font-black text-[var(--text-color)] select-none"
             >
-                تودو
+                کارا
             </Link>
             <div className="flex items-center gap-4">
                 <ThemeToggleButton />
