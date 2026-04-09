@@ -5,6 +5,8 @@ import AddTaskDialog from "./addTaskDialog/AddTaskDialog";
 import EditTaskDialog from "./editTaskDialog/EditTaskDialog";
 import TaskForm from "./taskForm/TaskForm";
 import Button from "./ui/button/Button";
+import Board from "./board/Board";
+import BoardsContainer from "./boardsContainer/BoardsContainer";
 
 export {
     Menu,
@@ -14,4 +16,6 @@ export {
     EditTaskDialog,
     TaskForm,
     Button,
+    Board,
+    BoardsContainer,
 };
