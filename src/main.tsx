@@ -2,18 +2,16 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
-import { TodoContextProvider } from "./contexts/todoContext.tsx";
-import { ThemeContextProvider } from "./contexts/themeContext.tsx";
 import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import { store } from "./contexts/store.ts";
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
         <BrowserRouter>
-            <TodoContextProvider>
-                <ThemeContextProvider>
-                    <App />
-                </ThemeContextProvider>
-            </TodoContextProvider>
+            <Provider store={store}>
+                <App />
+            </Provider>
         </BrowserRouter>
     </StrictMode>,
 );
