@@ -24,15 +24,15 @@ const themeSlice = createSlice({
     initialState,
     reducers: {
         toggleTheme(state) {
+            saveTheme(state.theme);
             state.theme =
                 state.theme === ThemeMode.dark
                     ? ThemeMode.light
                     : ThemeMode.dark;
-            saveTheme(state.theme);
         },
         setTheme(state, action: PayloadAction<ThemeMode>) {
-            state.theme = action.payload;
             saveTheme(state.theme);
+            state.theme = action.payload;
         },
     },
 });
