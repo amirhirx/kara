@@ -1,4 +1,6 @@
 import type { ITask } from "../../types";
+import Task from "./Task";
+import NewTask from "./NewTask";
 
 export default function Board({
     title,
@@ -14,12 +16,10 @@ export default function Board({
                 {tasks.length >= 1 ? (
                     tasks.map(({ id, title }) => {
                         return (
-                            <li
+                            <Task
                                 key={id}
-                                className={`bg-[var(--secondary-color)]/50 rounded py-1 px-2`}
-                            >
-                                {title}
-                            </li>
+                                title={title}
+                            />
                         );
                     })
                 ) : (
@@ -30,16 +30,7 @@ export default function Board({
                     </div>
                 )}
             </ul>
-            <div className="bg-[var(--secondary-color)] p-1 rounded-lg flex items-center">
-                <input
-                    type="text"
-                    placeholder="عنوان وظیفه را وارد کنید..."
-                    className="w-full px-1 text-sm outline-none select-none"
-                />
-                <button className="select-none text-xs bg-[var(--primary-color)] py-1 px-2 rounded-lg transition active:scale-95">
-                    افزودن
-                </button>
-            </div>
+            <NewTask clickHandler={(title) => console.log(title)} />
         </div>
     );
 }
