@@ -9,8 +9,20 @@ export enum ThemeMode {
     dark = "dark",
 }
 
-export interface ITask {
+interface shared {
     id: string;
     title: string;
+    description: string;
+}
+
+export interface IProject extends shared {
+    boards: IBoard[];
+}
+
+export interface IBoard extends shared {
+    tasks: ITask[];
+}
+
+export interface ITask extends shared {
     status: taskStatus;
 }
