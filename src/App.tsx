@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import { Menu } from "./components";
+import Project from "./pages/Project";
 
 function App() {
     return (
@@ -10,6 +11,10 @@ function App() {
                 <Route
                     path="/"
                     element={<Home />}
+                />
+                <Route
+                    path="/project/:id"
+                    element={<Project />}
                 />
             </Routes>
         </main>
