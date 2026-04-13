@@ -3,9 +3,13 @@ import Task from "./Task";
 import NewTask from "./NewTask";
 
 export default function Board({
+    projectId,
+    boardId,
     title,
     tasks,
 }: {
+    projectId: string;
+    boardId: string;
     title: string;
     tasks: ITask[];
 }) {
@@ -30,7 +34,10 @@ export default function Board({
                     </div>
                 )}
             </ul>
-            <NewTask clickHandler={(title) => console.log(title)} />
+            <NewTask
+                projectId={projectId}
+                boardId={boardId}
+            />
         </div>
     );
 }
