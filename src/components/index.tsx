@@ -6,6 +6,8 @@ import BoardsContainer from "./boardsContainer/BoardsContainer";
 import NewBoardButton from "./newBoardButton/NewBoardButton";
 import ProjectCard from "./projectCard/ProjectCard";
 import ProjectCardContainer from "./projectCardContainer/ProjectCardContainer";
+import Overflow from "./overflow/Overflow";
+import MessageDialog from "./messageDialog/MessageDialog";
 
 export {
     Menu,
@@ -15,4 +17,6 @@ export {
     NewBoardButton,
     ProjectCard,
     ProjectCardContainer,
+    Overflow,
+    MessageDialog,
 };
