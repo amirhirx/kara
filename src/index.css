@@ -12,6 +12,12 @@
     --secondary-color: #2f2f2f;
 }
 
+@theme {
+    --color-text: var(--text-color);
+    --color-primary: var(--primary-color);
+    --color-secondary: var(--secondary-color);
+}
+
 @font-face {
     font-family: "Arad";
     src: url("/public/Arad-VF.woff2");

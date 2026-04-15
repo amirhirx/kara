@@ -32,7 +32,9 @@ export default function Project() {
                 </BoardsContainer>
             ) : (
                 <div className="w-full h-[80vh] flex justify-center items-center">
-                    <h2 className="font-bold">پروژه پیدا نشد!</h2>
+                    <h2 className="font-bold text-xl text-text">
+                        پروژه پیدا نشد!
+                    </h2>
                 </div>
             )}
         </div>

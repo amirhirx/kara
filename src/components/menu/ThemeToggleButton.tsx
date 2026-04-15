@@ -15,9 +15,9 @@ export default function ThemeToggleButton() {
             className="transition active:scale-95"
         >
             {theme === ThemeMode.dark ? (
-                <Moon className="h-6 w-6 text-[var(--text-color)]" />
+                <Moon className="h-6 w-6 text-text" />
             ) : (
-                <Sun className="h-6 w-6 text-[var(--text-color)]" />
+                <Sun className="h-6 w-6 text-text" />
             )}
         </div>
     );

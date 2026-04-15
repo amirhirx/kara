@@ -37,7 +37,7 @@ export default function NewTask({
                     closeHandler={() => setAlertDialog(false)}
                 />
             )}
-            <div className="bg-[var(--secondary-color)] p-1 rounded-lg flex items-center">
+            <div className="bg-secondary p-1 rounded-lg flex items-center">
                 <input
                     type="text"
                     placeholder="عنوان وظیفه را وارد کنید..."
@@ -47,7 +47,7 @@ export default function NewTask({
                 />
                 <button
                     onClick={clickHandler}
-                    className="select-none text-xs bg-[var(--primary-color)] py-1 px-2 rounded-lg transition active:scale-95"
+                    className="select-none text-xs bg-primary py-1 px-2 rounded-lg transition active:scale-95"
                 >
                     افزودن
                 </button>

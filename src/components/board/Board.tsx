@@ -14,7 +14,7 @@ export default function Board({
     tasks: ITask[];
 }) {
     return (
-        <div className="w-64 bg-[var(--primary-color)] text-[var(--text-color)] p-2 rounded-lg space-y-2">
+        <div className="w-64 bg-primary text-text p-2 rounded-lg space-y-2">
             <h2 className="font-bold text-lg">{title}</h2>
             <ul className="flex flex-col gap-2">
                 {tasks.length >= 1 ? (

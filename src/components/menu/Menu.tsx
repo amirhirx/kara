@@ -5,10 +5,10 @@ function Menu() {
     // TODO: show new task dialog with shorcuts
 
     return (
-        <nav className="bg-[var(--primary-color)] py-2 px-8 flex items-center justify-between shadow border border-[var(--secondary-color)]">
+        <nav className="bg-primary py-2 px-8 flex items-center justify-between shadow border border-secondary">
             <Link
                 to={"/"}
-                className="text-xl font-black text-[var(--text-color)] select-none"
+                className="text-xl font-black text-text select-none"
             >
                 کارا
             </Link>

@@ -32,7 +32,7 @@ export default function NewBoardButton({ projectId }: { projectId: string }) {
             )}
             <button
                 onClick={clickHandler}
-                className="w-60 bg-[var(--primary-color)] text-[var(--text-color)] py-2.5 px-4 rounded-lg text-sm font-semibold flex gap-1 justify-center items-center opacity-75 hover:opacity-100 transition active:scale-95"
+                className="w-60 bg-primary text-text py-2.5 px-4 rounded-lg text-sm font-semibold flex gap-1 justify-center items-center opacity-75 hover:opacity-100 transition active:scale-95"
             >
                 افزودن لیست جدید
                 <Plus className="w-5" />
