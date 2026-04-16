@@ -16,6 +16,7 @@ interface shared {
 }
 
 export interface IProject extends shared {
+    emojie: string;
     boards: IBoard[];
 }
 

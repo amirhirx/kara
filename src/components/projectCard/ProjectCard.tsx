@@ -4,10 +4,12 @@ export default function ProjectCard({
     id,
     title,
     description,
+    emojie,
 }: {
     id: string;
     title: string;
     description: string;
+    emojie: string;
 }) {
     return (
         <Link
@@ -15,7 +17,11 @@ export default function ProjectCard({
             className="w-full md:w-74 bg-primary text-text rounded-lg"
         >
             <div className="h-18 py-2 px-4 bg-secondary/35 relative">
-                <div className="w-18 h-18 rounded-2xl bg-secondary absolute -bottom-5"></div>
+                <div className="w-18 h-18 rounded-2xl bg-secondary absolute -bottom-5 p-1 flex items-center justify-center">
+                    <span className="text-5xl font-black select-none">
+                        {emojie}
+                    </span>
+                </div>
             </div>
             <div className="pt-6 pb-2 px-4">
                 <h2 className="font-bold text-lg line-clamp-1">{title}</h2>

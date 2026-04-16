@@ -4,7 +4,7 @@ export default function ProjectCardContainer({
     children: React.ReactNode;
 }) {
     return (
-        <section className="w-11/12 mx-auto p-2 flex flex-wrap items-center gap-2">
+        <section className="w-11/12 mx-auto p-2 grid md:grid-cols-4 gap-2">
             {children}
         </section>
     );

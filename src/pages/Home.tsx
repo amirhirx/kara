@@ -19,11 +19,14 @@ export default function Home() {
     const createNewProject = () => {
         const title = prompt("Enter project title:") || "";
         const description = prompt("Enter project description:") || "";
+        const emojie = prompt("Enter an emojie") || "💡";
+
         if (title?.length >= 3) {
             dispatch(
                 newProject({
-                    title: title,
-                    description: description,
+                    emojie,
+                    title,
+                    description,
                 }),
             );
         } else setAlertDialog(true);
@@ -43,12 +46,13 @@ export default function Home() {
                     <Button onClick={createNewProject}>پروژه جدید</Button>
                 </div>
                 <ProjectCardContainer>
-                    {projects.map(({ id, title, description }) => {
+                    {projects.map(({ id, title, description, emojie }) => {
                         return (
                             <ProjectCard
                                 key={id}
                                 id={id}
                                 title={title}
+                                emojie={emojie}
                                 description={description}
                             />
                         );

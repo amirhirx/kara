@@ -16,9 +16,14 @@ const projectsSlice = createSlice({
     reducers: {
         newProject(
             state,
-            action: PayloadAction<{ title: string; description: string }>,
+            action: PayloadAction<{
+                emojie: string;
+                title: string;
+                description: string;
+            }>,
         ) {
             const newProject: IProject = {
+                emojie: action.payload.emojie,
                 id: nanoid(),
                 title: action.payload.title,
                 description: action.payload.description,
