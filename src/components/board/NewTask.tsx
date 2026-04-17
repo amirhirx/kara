@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { newTask } from "../../contexts/projectsSlice";
 import MessageDialog from "../messageDialog/MessageDialog";
+import { X } from "lucide-react";
 
 export default function NewTask({
     projectId,
@@ -38,6 +39,12 @@ export default function NewTask({
                 />
             )}
             <div className="bg-secondary p-1 rounded-lg flex items-center">
+                {title.length >= 1 && (
+                    <X
+                        className="w-5"
+                        onClick={() => setTitle("")}
+                    />
+                )}
                 <input
                     type="text"
                     placeholder="عنوان وظیفه را وارد کنید..."
