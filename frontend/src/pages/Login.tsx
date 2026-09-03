@@ -10,6 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -52,10 +53,11 @@ export default function LoginPage() {
               />
             </div>
           </CardContent>
-          <CardFooter className="mt-4">
+          <CardFooter className="mt-4 flex flex-col gap-2">
             <Button type="submit" className="w-full py-4">
               Login
             </Button>
+            <Link to="/signin">Don't have an account? Sign up</Link>
           </CardFooter>
         </form>
       </Card>
