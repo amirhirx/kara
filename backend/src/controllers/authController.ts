@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import User from "../models/User";
 import { AuthRequest } from "../middleware/auth";
 
-export const signin = async (req: Request, res: Response) => {
+export const signUp = async (req: Request, res: Response) => {
   try {
     const { firstName, lastName, email, password } = req.body;
 

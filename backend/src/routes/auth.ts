@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { login, signin, me } from "../controllers/authController";
+import { login, signUp, me } from "../controllers/authController";
 import { authMiddleware } from "../middleware/auth";
 
 const router = Router();
 
-router.post("/signin", signin);
+router.post("/signup", signUp);
 router.post("/login", login);
 router.get("/me", authMiddleware, me);
 router.get("/logout", authMiddleware, (req, res) => {
