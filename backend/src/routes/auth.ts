@@ -7,7 +7,7 @@ const router = Router();
 router.post("/signup", signUp);
 router.post("/login", login);
 router.get("/me", authMiddleware, me);
-router.get("/logout", authMiddleware, (req, res) => {
+router.post("/logout", authMiddleware, (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",

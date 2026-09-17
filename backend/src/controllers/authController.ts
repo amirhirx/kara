@@ -9,7 +9,7 @@ export const signUp = async (req: Request, res: Response) => {
 
     const isUserExist = await User.findOne({ email });
     if (isUserExist) {
-      return res.status(400).json({ message: "Email already exsist" });
+      return res.status(400).json({ message: "Email already exists" });
     }
 
     const user = await User.create({ firstName, lastName, email, password });
@@ -83,6 +83,15 @@ export const login = async (req: Request, res: Response) => {
   }
 };
 
-export const me = (req: AuthRequest, res: Response) => {
-  return res.json({ user: req.user });
+export const me = async (req: AuthRequest, res: Response) => {
+  try {
+    const user = await User.findById(req.user?.userId).select("-password");
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    return res.json({ user });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Server error" });
+  }
 };
