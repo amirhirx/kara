@@ -10,15 +10,45 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "@/components/ui/toast";
+import type { LoginPayload } from "@/types";
+import { login } from "@/services/auth";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Login: ", { email, password });
+
+    if (!email || !password) {
+      toast.add({
+        title: "Error",
+        description: "Please fill all fields",
+        type: "error",
+      });
+      return;
+    }
+
+    const payload: LoginPayload = { email, password };
+    const res = await login(payload);
+
+    if (!res) {
+      toast.add({
+        title: "Error",
+        description: "Login failed",
+        type: "error",
+      });
+    }
+
+    toast.add({
+      title: "Welcome back!",
+      description: "login successful",
+    });
+    navigate("/");
   };
 
   return (
@@ -57,7 +87,7 @@ export default function LoginPage() {
             <Button type="submit" className="w-full py-4">
               Login
             </Button>
-            <Link to="/signin">Don't have an account? Sign up</Link>
+            <Link to="/signUp">Don't have an account? Sign up</Link>
           </CardFooter>
         </form>
       </Card>
