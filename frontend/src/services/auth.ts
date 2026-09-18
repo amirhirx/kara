@@ -46,3 +46,17 @@ export const getUserDetails = async () => {
     return null;
   }
 };
+
+export const logout = async () => {
+  try {
+    const endpoint = "http://localhost:3000/api/auth/logout";
+    const res = await fetch(endpoint, {
+      method: "POST",
+      credentials: "include",
+    });
+    return res.json();
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};

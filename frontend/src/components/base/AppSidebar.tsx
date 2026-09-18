@@ -1,4 +1,11 @@
-import { Folder, Plus, User } from "lucide-react";
+import {
+  ChevronsUpDown,
+  Folder,
+  LogOut,
+  Plus,
+  Settings,
+  User,
+} from "lucide-react";
 import {
   SidebarHeader,
   SidebarFooter,
@@ -12,7 +19,16 @@ import {
   SidebarGroupLabel,
   SidebarGroupContent,
 } from "../ui/sidebar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 import { useUserStore } from "@/store/useUserStore";
+import { logout } from "@/services/auth";
+import { toast } from "../ui/toast";
+import { useNavigate } from "react-router-dom";
 
 const projects = [
   { id: 1, name: "test 1" },
@@ -24,6 +40,24 @@ const projects = [
 
 export default function AppSidebar() {
   const user = useUserStore((state) => state.user);
+  const clearUser = useUserStore((state) => state.clearUser);
+
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    const res = await logout();
+    if (res) {
+      clearUser();
+      toast.add({ title: "Logout", description: "logout successfully" });
+      navigate("/login");
+    } else {
+      toast.add({
+        title: "Logout",
+        description: "logout failed",
+        type: "error",
+      });
+    }
+  };
 
   return (
     <Sidebar collapsible="icon">
@@ -61,14 +95,36 @@ export default function AppSidebar() {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton>
-              <div className="flex items-center justify-between gap-2 py-0.5">
-                <User />
-                <span>
-                  {user?.firstName} {user?.lastName}
-                </span>
-              </div>
-            </SidebarMenuButton>
+            <DropdownMenu>
+              <DropdownMenuTrigger
+                className="w-full"
+                render={
+                  <SidebarMenuButton>
+                    <div className="flex items-center gap-2 w-full">
+                      <User />
+                      <span>
+                        {user?.firstName} {user?.lastName}
+                      </span>
+                    </div>
+                    <ChevronsUpDown />
+                  </SidebarMenuButton>
+                }
+              />
+              <DropdownMenuContent className="space-y-1">
+                <DropdownMenuItem>
+                  <User />
+                  <span>Profile</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Settings />
+                  <span>Settings</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem variant="destructive" onClick={handleLogout}>
+                  <LogOut />
+                  <span>Logout</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>

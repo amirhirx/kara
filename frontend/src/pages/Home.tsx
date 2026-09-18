@@ -1,3 +1,4 @@
+import SidebarLayout from "@/components/layouts/SidebarLayouts";
 import { getUserDetails } from "@/services/auth";
 import type { User } from "@/types";
 import { useEffect, useState } from "react";
@@ -17,11 +18,13 @@ export default function Home() {
   };
 
   return (
-    <div className="w-full py-1 px-4">
-      {user && (
-        <h2 className="text-2xl font-bold">Welcome {user.firstName}!</h2>
-      )}
-      <div className="text-lg">{quote.text}</div>
-    </div>
+    <SidebarLayout>
+      <div className="w-full py-1 px-4">
+        {user && (
+          <h2 className="text-2xl font-bold">Welcome {user.firstName}!</h2>
+        )}
+        <div className="text-lg">{quote.text}</div>
+      </div>
+    </SidebarLayout>
   );
 }
