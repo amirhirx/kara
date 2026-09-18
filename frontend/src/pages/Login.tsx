@@ -10,7 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { toast } from "@/components/ui/toast";
 import type { LoginPayload } from "@/types";
 import { login } from "@/services/auth";
@@ -22,6 +22,11 @@ export default function LoginPage() {
 
   const navigate = useNavigate();
   const setUser = useUserStore((state) => state.setUser);
+  const isAuthenticated = useUserStore((state) => state.isAuthenticated);
+
+  if (isAuthenticated) {
+    return <Navigate to="/" />;
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

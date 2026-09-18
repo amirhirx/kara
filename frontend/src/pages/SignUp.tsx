@@ -14,7 +14,7 @@ import { signUp } from "@/services/auth";
 import { useUserStore } from "@/store/useUserStore";
 import type { SignUpPayload } from "@/types";
 import { useState, type FormEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 export default function SignUp() {
   const [firstName, setFirstName] = useState("");
@@ -25,6 +25,11 @@ export default function SignUp() {
 
   const navigate = useNavigate();
   const setUser = useUserStore((state) => state.setUser);
+  const isAuthenticated = useUserStore((state) => state.isAuthenticated);
+
+  if (isAuthenticated) {
+    return <Navigate to="/" />;
+  }
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -82,11 +87,11 @@ export default function SignUp() {
     <div className="min-h-screen bg-muted flex items-center justify-center">
       <Card className="max-w-sm w-full">
         <CardHeader>
-          <CardTitle>Sign in</CardTitle>
+          <CardTitle>Sign Up</CardTitle>
           <CardDescription>Create an account</CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>
-          <CardContent className="space-y-2">
+          <CardContent className="space-y-2 mb-4">
             <div className="space-y-2">
               <Label htmlFor="first-name">First name</Label>
               <Input
