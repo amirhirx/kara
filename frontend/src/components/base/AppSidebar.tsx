@@ -12,14 +12,19 @@ import {
   SidebarGroupLabel,
   SidebarGroupContent,
 } from "../ui/sidebar";
+import { useUserStore } from "@/store/useUserStore";
 
 const projects = [
   { id: 1, name: "test 1" },
   { id: 2, name: "test 2" },
   { id: 3, name: "test 3" },
+  { id: 4, name: "test 4" },
+  { id: 5, name: "test 5" },
 ];
 
 export default function AppSidebar() {
+  const user = useUserStore((state) => state.user);
+
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
@@ -59,7 +64,9 @@ export default function AppSidebar() {
             <SidebarMenuButton>
               <div className="flex items-center justify-between gap-2 py-0.5">
                 <User />
-                <span>username</span>
+                <span>
+                  {user?.firstName} {user?.lastName}
+                </span>
               </div>
             </SidebarMenuButton>
           </SidebarMenuItem>

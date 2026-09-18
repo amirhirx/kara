@@ -11,9 +11,17 @@ export default function Home() {
     });
   }, []);
 
+  const quote = {
+    text: "Start with the smallest task you can complete.",
+    type: "tip",
+  };
+
   return (
-    <div className="w-full">
-      {user ? <p>Welcome {user.firstName}!</p> : <p>Login/Sign up</p>}
+    <div className="w-full py-1 px-4">
+      {user && (
+        <h2 className="text-2xl font-bold">Welcome {user.firstName}!</h2>
+      )}
+      <div className="text-lg">{quote.text}</div>
     </div>
   );
 }

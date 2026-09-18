@@ -14,12 +14,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "@/components/ui/toast";
 import type { LoginPayload } from "@/types";
 import { login } from "@/services/auth";
+import { useUserStore } from "@/store/useUserStore";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
+  const setUser = useUserStore((state) => state.setUser);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,6 +51,7 @@ export default function LoginPage() {
       description: "login successful",
     });
     navigate("/");
+    setUser(res.user);
   };
 
   return (

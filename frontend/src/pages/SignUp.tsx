@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/components/ui/toast";
 import { signUp } from "@/services/auth";
+import { useUserStore } from "@/store/useUserStore";
 import type { SignUpPayload } from "@/types";
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -23,6 +24,7 @@ export default function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const navigate = useNavigate();
+  const setUser = useUserStore((state) => state.setUser);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -73,6 +75,7 @@ export default function SignUp() {
 
     toast.add({ title: "Success", description: "Account created!" });
     navigate("/");
+    setUser(res.user);
   };
 
   return (
