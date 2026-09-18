@@ -35,3 +35,14 @@ export const login = async (payload: LoginPayload) => {
     return null;
   }
 };
+
+export const getUserDetails = async () => {
+  try {
+    const endpoint = "http://localhost:3000/api/auth/me";
+    const res = await fetch(endpoint, { credentials: "include" });
+    return res.json();
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
