@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-import mongoose, { Schema, HydratedDocument, Model } from "mongoose";
+import mongoose, { Schema, Model } from "mongoose";
 
 interface IUser {
   firstName: string;
@@ -12,8 +12,6 @@ interface IUser {
 interface IUserMethods {
   comparePassword(enteredPassword: string): Promise<boolean>;
 }
-
-type UserDocument = HydratedDocument<IUser, IUserMethods>;
 
 type UserModel = Model<IUser, {}, IUserMethods>;
 

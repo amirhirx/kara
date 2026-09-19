@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { connectDB } from "./config/db";
 import authRoutes from "./routes/auth";
+import ProjectRoutes from "./routes/projects";
 import cookieParser from "cookie-parser";
 
 dotenv.config();
@@ -21,6 +22,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
+app.use("/api/projects", ProjectRoutes);
 
 const startServer = async () => {
   await connectDB();
