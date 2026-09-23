@@ -1,6 +1,7 @@
 import React from "react";
 import { SidebarProvider, SidebarTrigger } from "../ui/sidebar";
 import AppSidebar from "../base/AppSidebar";
+import { Link } from "react-router-dom";
 
 export default function SidebarLayout({
   children,
@@ -14,7 +15,9 @@ export default function SidebarLayout({
         <div className="md:hidden flex items-center justify-between py-2 px-4">
           <div className="flex gap-2 items-center">
             <SidebarTrigger />
-            <h2 className="font-bold">Kara</h2>
+            <Link to="/" className="font-bold">
+              Kara
+            </Link>
           </div>
         </div>
         <div>{children}</div>

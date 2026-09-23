@@ -32,7 +32,7 @@ export const getAllProjects = async () => {
 
 export const getProjectById = async ({ id }: { id: string }) => {
   try {
-    const endpoint = "http://localhost:3000/api/projects" + id;
+    const endpoint = "http://localhost:3000/api/projects/" + id;
     const res = await fetch(endpoint, {
       headers: { "Content-Type": "application/json" },
     });
@@ -52,7 +52,7 @@ export const updateProjectById = async ({
   id: string;
 }) => {
   try {
-    const endpoint = "http://localhost:3000/api/projects" + id;
+    const endpoint = "http://localhost:3000/api/projects/" + id;
     const res = await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -68,7 +68,7 @@ export const updateProjectById = async ({
 
 export const deleteProject = async ({ id }: { id: string }) => {
   try {
-    const endpoint = "http://localhost:3000/api/projects" + id;
+    const endpoint = "http://localhost:3000/api/projects/" + id;
     const res = await fetch(endpoint, {
       headers: { "Content-Type": "application/json" },
     });

@@ -6,6 +6,7 @@ import { Toaster } from "./components/ui/toast";
 import ProtectedRoute from "./components/base/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 import Projects from "./pages/Projects";
+import ProjectDetail from "./pages/ProjectDetail";
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
         <Route element={<ProtectedRoute />}>
           <Route path="/" element={<Home />} />
           <Route path="/projects" element={<Projects />} />
+          <Route path="/projects/:id" element={<ProjectDetail />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
