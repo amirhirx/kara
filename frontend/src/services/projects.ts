@@ -5,6 +5,7 @@ export const createProject = async ({ title, description }: ProjectPayload) => {
     const endpoint = "http://localhost:3000/api/projects";
     const res = await fetch(endpoint, {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title, description }),
     });
 
@@ -18,7 +19,9 @@ export const createProject = async ({ title, description }: ProjectPayload) => {
 export const getAllProjects = async () => {
   try {
     const endpoint = "http://localhost:3000/api/projects";
-    const res = await fetch(endpoint);
+    const res = await fetch(endpoint, {
+      headers: { "Content-Type": "application/json" },
+    });
 
     return res.json();
   } catch (error) {
@@ -30,7 +33,9 @@ export const getAllProjects = async () => {
 export const getProjectById = async ({ id }: { id: string }) => {
   try {
     const endpoint = "http://localhost:3000/api/projects" + id;
-    const res = await fetch(endpoint);
+    const res = await fetch(endpoint, {
+      headers: { "Content-Type": "application/json" },
+    });
 
     return res.json();
   } catch (error) {
@@ -50,6 +55,7 @@ export const updateProjectById = async ({
     const endpoint = "http://localhost:3000/api/projects" + id;
     const res = await fetch(endpoint, {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updated),
     });
 
@@ -63,7 +69,9 @@ export const updateProjectById = async ({
 export const deleteProject = async ({ id }: { id: string }) => {
   try {
     const endpoint = "http://localhost:3000/api/projects" + id;
-    const res = await fetch(endpoint);
+    const res = await fetch(endpoint, {
+      headers: { "Content-Type": "application/json" },
+    });
 
     return res.json();
   } catch (error) {

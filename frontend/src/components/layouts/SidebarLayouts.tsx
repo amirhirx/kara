@@ -1,8 +1,6 @@
 import React from "react";
 import { SidebarProvider, SidebarTrigger } from "../ui/sidebar";
 import AppSidebar from "../base/AppSidebar";
-import { Button } from "../ui/button";
-import { Plus } from "lucide-react";
 
 export default function SidebarLayout({
   children,
@@ -18,9 +16,6 @@ export default function SidebarLayout({
             <SidebarTrigger />
             <h2 className="font-bold">Kara</h2>
           </div>
-          <Button variant="secondary">
-            <Plus />
-          </Button>
         </div>
         <div>{children}</div>
       </div>

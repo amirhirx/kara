@@ -16,3 +16,15 @@ export interface User {
   lastName: string;
   email: string;
 }
+
+export interface ProjectPayload {
+  title: string;
+  description?: string;
+}
+
+export interface Project {
+  _id: string;
+  title: string;
+  description?: string;
+  createdAt: string;
+}
