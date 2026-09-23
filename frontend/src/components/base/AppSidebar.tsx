@@ -1,11 +1,4 @@
-import {
-  ChevronsUpDown,
-  Folder,
-  LogOut,
-  Plus,
-  Settings,
-  User,
-} from "lucide-react";
+import { ChevronsUpDown, Folder, LogOut, Plus, Settings } from "lucide-react";
 import {
   SidebarHeader,
   SidebarFooter,
@@ -45,6 +38,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 import { Label } from "../ui/label";
+import { Avatar, AvatarFallback } from "../ui/avatar";
 
 export default function AppSidebar() {
   const user = useUserStore((state) => state.user);
@@ -180,12 +174,14 @@ export default function AppSidebar() {
           {projects && (
             <SidebarGroupContent>
               {projects.map(({ _id, title }) => (
-                <SidebarMenuItem key={_id}>
-                  <SidebarMenuButton>
-                    <Folder />
-                    <span>{title}</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+                <Link key={_id} to={`/projects/${_id}`}>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton>
+                      <Folder />
+                      <span>{title}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                </Link>
               ))}
             </SidebarGroupContent>
           )}
@@ -196,16 +192,20 @@ export default function AppSidebar() {
           <SidebarMenuItem>
             <DropdownMenu>
               <DropdownMenuTrigger
-                className="w-full"
                 render={
                   <SidebarMenuButton>
-                    <div className="flex items-center gap-2 w-full">
-                      <User />
+                    <div className="flex items-center gap-2">
+                      <Avatar>
+                        <AvatarFallback>
+                          {user?.firstName[0]}
+                          {user?.lastName[0]}
+                        </AvatarFallback>
+                      </Avatar>
                       <span>
                         {user?.firstName} {user?.lastName}
                       </span>
+                      <ChevronsUpDown />
                     </div>
-                    <ChevronsUpDown />
                   </SidebarMenuButton>
                 }
               />
