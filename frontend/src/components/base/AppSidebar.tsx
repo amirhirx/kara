@@ -28,7 +28,7 @@ import {
 import { useUserStore } from "@/store/useUserStore";
 import { logout } from "@/services/auth";
 import { toast } from "../ui/toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import type { Project } from "@/types";
 import { createProject, getAllProjects } from "@/services/projects";
@@ -115,7 +115,7 @@ export default function AppSidebar() {
       <SidebarHeader>
         <div className="flex items-center justify-between">
           <h1 className="text-lg font-bold group-data-[collapsible=icon]:hidden">
-            Kara
+            <Link to="/">Kara</Link>
           </h1>
           <SidebarTrigger />
         </div>
@@ -174,7 +174,9 @@ export default function AppSidebar() {
           </SidebarMenuItem>
         </SidebarGroup>
         <SidebarGroup>
-          <SidebarGroupLabel>Projects</SidebarGroupLabel>
+          <SidebarGroupLabel>
+            <Link to="/projects">Projects</Link>
+          </SidebarGroupLabel>
           {projects && (
             <SidebarGroupContent>
               {projects.map(({ _id, title }) => (
