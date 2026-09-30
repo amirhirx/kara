@@ -7,7 +7,12 @@ export const createProject = async (req: Request, res: Response) => {
 
     if (!title) return res.status(400).json({ message: "Bad request" });
 
-    const project = await Project.create({ title, description });
+    const project = await Project.create({
+      title,
+      description,
+      owner: req.user!.userId,
+      members: [],
+    });
     return res.status(200).json({ project });
   } catch (error) {
     console.log(error);
@@ -15,6 +20,7 @@ export const createProject = async (req: Request, res: Response) => {
   }
 };
 
+// TODO: check user has access to what projects
 export const getAllProjects = async (req: Request, res: Response) => {
   try {
     const projects = await Project.find();

@@ -7,6 +7,7 @@ export const createProject = async ({ title, description }: ProjectPayload) => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title, description }),
+      credentials: "include",
     });
 
     return res.json();
@@ -21,6 +22,7 @@ export const getAllProjects = async () => {
     const endpoint = "http://localhost:3000/api/projects";
     const res = await fetch(endpoint, {
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
     });
 
     return res.json();
@@ -35,6 +37,7 @@ export const getProjectById = async ({ id }: { id: string }) => {
     const endpoint = "http://localhost:3000/api/projects/" + id;
     const res = await fetch(endpoint, {
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
     });
 
     return res.json();
@@ -54,9 +57,10 @@ export const updateProjectById = async ({
   try {
     const endpoint = "http://localhost:3000/api/projects/" + id;
     const res = await fetch(endpoint, {
-      method: "POST",
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updated),
+      credentials: "include",
     });
 
     return res.json();
@@ -70,7 +74,9 @@ export const deleteProject = async ({ id }: { id: string }) => {
   try {
     const endpoint = "http://localhost:3000/api/projects/" + id;
     const res = await fetch(endpoint, {
+      method: "DELETE",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
     });
 
     return res.json();
