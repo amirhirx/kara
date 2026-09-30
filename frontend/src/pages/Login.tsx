@@ -43,20 +43,21 @@ export default function LoginPage() {
     const payload: LoginPayload = { email, password };
     const res = await login(payload);
 
-    if (!res) {
+    if (!res || !res.user) {
       toast.add({
         title: "Error",
         description: "Login failed",
         type: "error",
       });
+      return;
     }
 
     toast.add({
       title: "Welcome back!",
       description: "login successful",
     });
-    navigate("/");
     setUser(res.user);
+    navigate("/");
   };
 
   return (
