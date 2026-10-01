@@ -85,3 +85,35 @@ export const deleteProject = async ({ id }: { id: string }) => {
     return null;
   }
 };
+
+export const archiveProject = async ({ id }: { id: string }) => {
+  try {
+    const endpoint = `http://localhost:3000/api/projects/${id}/archive`;
+    const res = await fetch(endpoint, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+
+    return res.json();
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const unArchiveProject = async ({ id }: { id: string }) => {
+  try {
+    const endpoint = `http://localhost:3000/api/projects/${id}/unarchive`;
+    const res = await fetch(endpoint, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+
+    return res.json();
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};

@@ -26,5 +26,9 @@ export interface Project {
   _id: string;
   title: string;
   description?: string;
+  owner: string;
+  members: string[];
+  isArchived: boolean;
   createdAt: string;
+  updatedAt: string;
 }
