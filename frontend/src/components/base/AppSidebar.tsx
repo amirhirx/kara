@@ -46,7 +46,7 @@ export default function AppSidebar() {
 
   const [projects, setProjects] = useState<Project[] | null>(null);
   const [isCreatingDialogOpen, setIsCreatingDialogOpen] = useState(false);
-  const [isSubmiting, setIsSubmiting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     getAllProjects().then((res) => setProjects(res.projects));
@@ -75,32 +75,46 @@ export default function AppSidebar() {
     const title = formData.get("project-title") as string;
     const description = formData.get("project-description") as string;
 
-    if (!title.trim()) {
+    if (!title) {
       toast.add({
         title: "Title is missing",
-        description: "project must have title",
+        description: "Project must have a title",
+        type: "error",
       });
-    } else {
-      setIsSubmiting(true);
-      try {
-        const res = await createProject({ title, description });
-        if (res.project) {
-          setProjects((prev) =>
-            prev ? [...prev, res.project] : [res.project],
-          );
-          toast.add({ title: "Project created" });
-        }
-        setIsCreatingDialogOpen(false);
-      } catch (error) {
-        console.log(error);
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const res = await createProject({ title, description });
+
+      if (!res || !res.project) {
         toast.add({
           title: "Error",
-          description: "Failed to create project",
+          description: res?.message ?? "Failed to create project",
           type: "error",
         });
-      } finally {
-        setIsSubmiting(false);
+        return;
       }
+
+      setProjects((prev) => (prev ? [...prev, res.project] : [res.project]));
+      toast.add({
+        title: "Project created",
+        description: `"${res.project.title}" added`,
+      });
+
+      setIsCreatingDialogOpen(false);
+    } catch (error) {
+      console.log(error);
+
+      toast.add({
+        title: "Unexpected error",
+        description: "Please try again",
+        type: "error",
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -143,7 +157,8 @@ export default function AppSidebar() {
                     id="project-title"
                     name="project-title"
                     type="text"
-                    placeholder="title"
+                    placeholder="e.g. Landing page redesign"
+                    autoFocus
                   />
                   <Label htmlFor="project-description">Description</Label>
                   <Textarea
@@ -154,11 +169,12 @@ export default function AppSidebar() {
                   <DialogFooter>
                     <Button
                       variant="outline"
+                      type="button"
                       onClick={() => setIsCreatingDialogOpen(false)}
                     >
                       Cancel
                     </Button>
-                    <Button type="submit" disabled={isSubmiting}>
+                    <Button type="submit" disabled={isSubmitting}>
                       Create Project
                     </Button>
                   </DialogFooter>

@@ -1,7 +1,9 @@
 import { Request, Response } from "express";
 import Project from "../models/Project";
+import { AuthRequest } from "../middleware/auth";
+import { isValidObjectId } from "mongoose";
 
-export const createProject = async (req: Request, res: Response) => {
+export const createProject = async (req: AuthRequest, res: Response) => {
   try {
     const { title, description } = req.body;
 
@@ -13,17 +15,27 @@ export const createProject = async (req: Request, res: Response) => {
       owner: req.user!.userId,
       members: [],
     });
-    return res.status(200).json({ project });
+
+    return res.status(201).json({ project });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Server error" });
   }
 };
 
-// TODO: check user has access to what projects
-export const getAllProjects = async (req: Request, res: Response) => {
+export const getAllProjects = async (req: AuthRequest, res: Response) => {
   try {
-    const projects = await Project.find();
+    if (!req.user) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const userId = req.user.userId;
+
+    const projects = await Project.find({
+      $or: [{ owner: userId }, { members: userId }],
+      isArchived: false,
+    }).sort({ createdAt: -1 });
+
     return res.status(200).json({ projects });
   } catch (error) {
     console.log(error);
@@ -31,13 +43,27 @@ export const getAllProjects = async (req: Request, res: Response) => {
   }
 };
 
-export const getProjectById = async (req: Request, res: Response) => {
+export const getProjectById = async (req: AuthRequest, res: Response) => {
   try {
     const { id } = req.params;
 
+    if (!req.user) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
     if (!id)
-      return res.status(400).json({ message: "you must send project id" });
-    const project = await Project.findById(id);
+      return res.status(404).json({ message: "you must send project id" });
+
+    if (!id || !isValidObjectId(id)) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    const userId = req.user.userId;
+
+    const project = await Project.findOne({
+      _id: id,
+      $or: [{ owner: userId }, { members: userId }],
+    });
 
     if (!project)
       return res
@@ -51,13 +77,30 @@ export const getProjectById = async (req: Request, res: Response) => {
   }
 };
 
-// edit a project
-export const updateProjectById = async (req: Request, res: Response) => {
+export const updateProjectById = async (req: AuthRequest, res: Response) => {
   try {
     const { id } = req.params;
     const { title, description } = req.body;
 
-    const project = await Project.findByIdAndUpdate(id, { title, description });
+    if (!req.user) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    if (!id || !isValidObjectId(id)) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    if (!title && !description) {
+      return res.status(400).json({ message: "Nothing to update" });
+    }
+
+    const userId = req.user.userId;
+
+    const project = await Project.findOneAndUpdate(
+      { _id: id, owner: userId },
+      { title, description },
+      { new: true, runValidators: true },
+    );
 
     if (!project) return res.status(404).json({ message: "project not found" });
 
@@ -68,15 +111,87 @@ export const updateProjectById = async (req: Request, res: Response) => {
   }
 };
 
-// delete a project
-export const deleteProjectById = async (req: Request, res: Response) => {
+export const deleteProjectById = async (req: AuthRequest, res: Response) => {
   try {
     const { id } = req.params;
 
-    const project = await Project.findByIdAndDelete(id);
+    if (!req.user) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    if (!id || !isValidObjectId(id)) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    const userId = req.user.userId;
+
+    const project = await Project.findOneAndDelete({ _id: id, owner: userId });
+
     if (!project) return res.status(404).json({ message: "project not found" });
 
     return res.status(200).json({ message: "project successfully deleted" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const archiveProject = async (req: AuthRequest, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    if (!req.user) {
+      return res.status(401).json({ message: "Unautherized" });
+    }
+
+    if (!id || !isValidObjectId(id)) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    const userId = req.user.userId;
+
+    const project = await Project.findOneAndUpdate(
+      { _id: id, owner: userId },
+      { isArchived: true },
+      { new: true },
+    );
+
+    if (!project) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    return res.status(200).json({ project });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const unArchiveProject = async (req: AuthRequest, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    if (!req.user) {
+      return res.status(401).json({ message: "Unautherized" });
+    }
+
+    if (!id || !isValidObjectId(id)) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    const userId = req.user.userId;
+
+    const project = await Project.findOneAndUpdate(
+      { _id: id, owner: userId },
+      { isArchived: false },
+      { new: true },
+    );
+
+    if (!project) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    return res.status(200).json({ project });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Server error" });
