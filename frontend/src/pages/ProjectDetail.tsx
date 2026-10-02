@@ -80,9 +80,6 @@ export default function ProjectDetail() {
             <TabsContent value="settings">
               <p>Settings content goes here.</p>
             </TabsContent>
-            <TabsContent value="notebook">
-              <p>Notebook content goes here.</p>
-            </TabsContent>
           </Tabs>
         </div>
       )}

@@ -1,10 +1,17 @@
 import ProjectCard from "@/components/base/ProjectCard";
 import SidebarLayout from "@/components/layouts/SidebarLayouts";
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty";
 import { toast } from "@/components/ui/toast";
 import { getAllProjects } from "@/services/projects";
 import type { Project } from "@/types";
+import { Folder } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 export default function Projects() {
   const [projects, setProjects] = useState<Project[] | null>(null);
@@ -30,33 +37,38 @@ export default function Projects() {
 
   return (
     <SidebarLayout>
-      <div className="py-6 px-8 space-y-4">
+      <div className="py-6 lg:px-8 px-4 space-y-4">
         <h1 className="font-bold text-xl">Projects</h1>
-        {isLoading ? (
-          <div>Loading...</div>
-        ) : (
-          <section className="space-y-4">
-            {projects ? (
-              projects.length > 0 ? (
-                projects.map((p) => {
-                  return (
-                    <Link
-                      to={`/projects/${p._id}`}
-                      key={`project-${p._id}`}
-                      className="block"
-                    >
-                      <ProjectCard {...p} />
-                    </Link>
-                  );
-                })
+        <div className="min-h-[80vh] w-full flex justify-center items-center">
+          {isLoading ? (
+            <div>Loading...</div>
+          ) : (
+            <section className="space-y-4">
+              {projects ? (
+                projects.length > 0 ? (
+                  projects.map((p) => {
+                    return <ProjectCard key={`project-${p._id}`} {...p} />;
+                  })
+                ) : (
+                  <Empty>
+                    <EmptyHeader>
+                      <EmptyMedia variant="icon">
+                        <Folder />
+                      </EmptyMedia>
+                      <EmptyTitle>No Projects Yet</EmptyTitle>
+                      <EmptyDescription>
+                        You haven't created any projects yet. <br />
+                        Get started by creating your first project.
+                      </EmptyDescription>
+                    </EmptyHeader>
+                  </Empty>
+                )
               ) : (
-                <p>empty projects</p>
-              )
-            ) : (
-              <p>Error!</p>
-            )}
-          </section>
-        )}
+                <p>Error!</p>
+              )}
+            </section>
+          )}
+        </div>
       </div>
     </SidebarLayout>
   );
