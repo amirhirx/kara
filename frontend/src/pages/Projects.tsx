@@ -39,17 +39,18 @@ export default function Projects() {
     <SidebarLayout>
       <div className="py-6 lg:px-8 px-4 space-y-4">
         <h1 className="font-bold text-xl">Projects</h1>
-        <div className="min-h-[80vh] w-full flex justify-center items-center">
-          {isLoading ? (
-            <div>Loading...</div>
-          ) : (
-            <section className="space-y-4">
-              {projects ? (
-                projects.length > 0 ? (
-                  projects.map((p) => {
-                    return <ProjectCard key={`project-${p._id}`} {...p} />;
-                  })
-                ) : (
+
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : (
+          <section className="space-y-4 w-full">
+            {projects ? (
+              projects.length > 0 ? (
+                projects.map((p) => {
+                  return <ProjectCard key={`project-${p._id}`} {...p} />;
+                })
+              ) : (
+                <div className="min-h-[80vh] w-full flex justify-center items-center">
                   <Empty>
                     <EmptyHeader>
                       <EmptyMedia variant="icon">
@@ -62,13 +63,13 @@ export default function Projects() {
                       </EmptyDescription>
                     </EmptyHeader>
                   </Empty>
-                )
-              ) : (
-                <p>Error!</p>
-              )}
-            </section>
-          )}
-        </div>
+                </div>
+              )
+            ) : (
+              <p>Error!</p>
+            )}
+          </section>
+        )}
       </div>
     </SidebarLayout>
   );
