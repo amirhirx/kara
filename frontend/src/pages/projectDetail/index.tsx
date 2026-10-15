@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CheckCircle, LayoutDashboard, Settings } from "lucide-react";
+import ProjectOverview from "./ProjectOverview";
 
 export default function ProjectDetail() {
   const { id } = useParams();
@@ -69,10 +70,7 @@ export default function ProjectDetail() {
               </TabsTrigger>
             </TabsList>
             <TabsContent value="overview" className="space-y-2 py-2 px-4">
-              <h1 className="text-2xl font-bold line-clamp-1">
-                {project?.title}
-              </h1>
-              <p>{project?.description}</p>
+              <ProjectOverview {...project!} />
             </TabsContent>
             <TabsContent value="tasks">
               <p>Tasks content goes here.</p>

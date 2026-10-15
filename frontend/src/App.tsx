@@ -6,7 +6,7 @@ import { Toaster } from "./components/ui/toast";
 import ProtectedRoute from "./components/base/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 import Projects from "./pages/Projects";
-import ProjectDetail from "./pages/ProjectDetail";
+import ProjectDetail from "./pages/projectDetail";
 
 export default function App() {
   return (
