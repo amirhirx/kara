@@ -49,7 +49,9 @@ export default function AppSidebar() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    getAllProjects().then((res) => setProjects(res.projects));
+    getAllProjects().then((res) => {
+      if (res) setProjects(res.projects);
+    });
   }, []);
 
   const navigate = useNavigate();
@@ -209,19 +211,22 @@ export default function AppSidebar() {
             <DropdownMenu>
               <DropdownMenuTrigger
                 render={
-                  <SidebarMenuButton>
-                    <div className="flex items-center gap-2">
-                      <Avatar>
-                        <AvatarFallback>
-                          {user?.firstName[0]}
-                          {user?.lastName[0]}
-                        </AvatarFallback>
-                      </Avatar>
-                      <span>
+                  <SidebarMenuButton size="lg">
+                    <Avatar className="size-8">
+                      <AvatarFallback>
+                        {user?.firstName[0]}
+                        {user?.lastName[0]}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
+                      <span className="truncate font-medium">
                         {user?.firstName} {user?.lastName}
                       </span>
-                      <ChevronsUpDown />
+                      <span className="truncate text-xs text-muted-foreground">
+                        {user?.email}
+                      </span>
                     </div>
+                    <ChevronsUpDown className="ml-auto size-4 group-data-[collapsible=icon]:hidden" />
                   </SidebarMenuButton>
                 }
               />
