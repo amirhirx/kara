@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import Project from "../models/Project";
 import { AuthRequest } from "../middleware/auth";
 import { isValidObjectId } from "mongoose";
+import { isAdmin } from "../utils/projectAuth";
+import User from "../models/User";
 
 export const createProject = async (req: AuthRequest, res: Response) => {
   try {
@@ -190,6 +192,93 @@ export const unArchiveProject = async (req: AuthRequest, res: Response) => {
     if (!project) {
       return res.status(404).json({ message: "Project not found" });
     }
+
+    return res.status(200).json({ project });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const getProjectMembers = async (req: AuthRequest, res: Response) => {
+  try {
+    if (!req.user) return res.status(401).json({ message: "Unauthorized" });
+
+    const { id } = req.params;
+    const userId = req.user.userId;
+
+    if (!id || !isValidObjectId(id)) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    const project = await Project.findOne({
+      _id: id,
+      $or: [{ owner: userId }, { members: userId }],
+    })
+      .populate("owner", "firstName lastName email")
+      .populate("admins", "firstName lastName email")
+      .populate("members", "firstName lastName email");
+
+    if (!project) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    return res.status(200).json({
+      owner: project.owner,
+      admins: project.admins,
+      members: project.members,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const inviteMember = async (req: AuthRequest, res: Response) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({ message: "Unautherized" });
+    }
+
+    const { id } = req.params;
+    const { email } = req.body;
+    const userId = req.user.userId;
+
+    if (!id || !isValidObjectId(id)) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    const project = await Project.findById(id);
+    if (!project) return res.status(404).json({ message: "Project not found" });
+
+    if (!isAdmin(project, userId)) {
+      return res
+        .status(403)
+        .json({ message: "Only owner or admin can invite members" });
+    }
+
+    const invitedUser = await User.findOne({ email: email });
+    if (!invitedUser)
+      return res.status(404).json({ message: "No user found with this email" });
+
+    const invitedUserId = invitedUser._id.toString();
+
+    if (invitedUserId === userId) {
+      return res
+        .status(400)
+        .json({ message: "You are already part of this project" });
+    }
+
+    if (project.owner.toString() === invitedUserId) {
+      return res.status(400).json({ message: "User is the project owner" });
+    }
+
+    if (project.members.some((member) => member.toString() === invitedUserId)) {
+      return res.status(409).json({ message: "User is already a member" });
+    }
+
+    project.members.push(invitedUser._id);
+    await project.save();
 
     return res.status(200).json({ project });
   } catch (error) {

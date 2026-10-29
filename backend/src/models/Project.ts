@@ -4,6 +4,7 @@ interface Project {
   title: string;
   description: string;
   owner: Types.ObjectId;
+  admins: Types.ObjectId[];
   members: Types.ObjectId[];
   isArchived: boolean;
   createdAt: Date;
@@ -32,6 +33,7 @@ const projectSchema = new Schema<Project>(
       required: true,
       index: true,
     },
+    admins: [{ type: Schema.Types.ObjectId, ref: "User", index: true }],
     members: [{ type: Schema.Types.ObjectId, ref: "User", index: true }],
     isArchived: {
       type: Boolean,
