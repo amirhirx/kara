@@ -7,6 +7,10 @@ import {
   deleteProjectById,
   archiveProject,
   unArchiveProject,
+  getProjectMembers,
+  inviteMember,
+  removeMember,
+  leaveProject,
 } from "../controllers/projectController";
 import { authMiddleware } from "../middleware/auth";
 
@@ -21,5 +25,9 @@ router.put("/:id", updateProjectById);
 router.delete("/:id", deleteProjectById);
 router.put("/:id/archive", archiveProject);
 router.put("/:id/unarchive", unArchiveProject);
+router.get("/:id/members", getProjectMembers);
+router.post("/:id/members", inviteMember);
+router.delete("/:id/members/:userId", removeMember);
+router.post("/:id/leave", leaveProject);
 
 export default router;

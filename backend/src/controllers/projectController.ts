@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import Project from "../models/Project";
 import { AuthRequest } from "../middleware/auth";
 import { isValidObjectId } from "mongoose";
-import { isAdmin } from "../utils/projectAuth";
+import { isAdmin, isMember, isOwner } from "../utils/projectAuth";
 import User from "../models/User";
 
 export const createProject = async (req: AuthRequest, res: Response) => {
@@ -281,6 +281,109 @@ export const inviteMember = async (req: AuthRequest, res: Response) => {
     await project.save();
 
     return res.status(200).json({ project });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const removeMember = async (req: AuthRequest, res: Response) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const { id, userId: targetUserId } = req.params;
+    const userId = req.user.userId;
+
+    if (
+      !id ||
+      !isValidObjectId(id) ||
+      !targetUserId ||
+      !isValidObjectId(targetUserId)
+    ) {
+      return res.status(404).json({ message: "Not found" });
+    }
+
+    const project = await Project.findById(id);
+    if (!project) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    if (project.owner.toString() === targetUserId) {
+      return res.status(403).json({ message: "Owner cannot be removed" });
+    }
+
+    if (!isAdmin(project, userId)) {
+      return res
+        .status(403)
+        .json({ message: "Only owner & admin can remove admins" });
+    }
+
+    const isTargetUserMember = project.members.some(
+      (member) => member.toString() === targetUserId,
+    );
+
+    if (!isTargetUserMember) {
+      return res
+        .status(404)
+        .json({ message: "User is not a member of this project" });
+    }
+
+    project.members = project.members.filter(
+      (member) => member.toString() !== targetUserId,
+    );
+
+    project.admins = project.admins.filter(
+      (member) => member.toString() !== targetUserId,
+    );
+
+    await project.save();
+    return res.status(200).json({ project });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const leaveProject = async (req: AuthRequest, res: Response) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const { id } = req.params;
+    const userId = req.user.userId;
+
+    if (!id || !isValidObjectId(id)) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    const project = await Project.findById(id);
+    if (!project) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    if (isOwner(project, userId)) {
+      return res.status(400).json({ message: "Owner can't leave project" });
+    }
+
+    if (!isMember(project, userId)) {
+      return res
+        .status(400)
+        .json({ message: "You are not member of this project" });
+    }
+
+    project.members = project.members.filter(
+      (member) => member.toString() !== userId,
+    );
+
+    project.admins = project.admins.filter(
+      (member) => member.toString() !== userId,
+    );
+
+    await project.save();
+    return res.status(200).json({ message: "You left the project" });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Server error" });
