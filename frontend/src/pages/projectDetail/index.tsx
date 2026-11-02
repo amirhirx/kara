@@ -13,6 +13,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CheckCircle, LayoutDashboard, Settings } from "lucide-react";
 import ProjectOverview from "./ProjectOverview";
+import ProjectSettings from "./ProjectSettings";
 
 export default function ProjectDetail() {
   const { id } = useParams();
@@ -22,7 +23,6 @@ export default function ProjectDetail() {
   useEffect(() => {
     getProjectById({ id: id as string })
       .then((res) => {
-        console.log(res);
         if (res.project) {
           setProject(res.project);
         }
@@ -76,7 +76,7 @@ export default function ProjectDetail() {
               <p>Tasks content goes here.</p>
             </TabsContent>
             <TabsContent value="settings">
-              <p>Settings content goes here.</p>
+              <ProjectSettings {...project!} />
             </TabsContent>
           </Tabs>
         </div>

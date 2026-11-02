@@ -28,7 +28,16 @@ export interface Project {
   description?: string;
   owner: string;
   members: string[];
+  admins: string[];
   isArchived: boolean;
   createdAt: string;
   updatedAt: string;
 }
+
+export interface ProjectMembers {
+  owner: User;
+  admins: User[];
+  members: User[];
+}
+
+export type UserRoles = "member" | "admin" | "owner";

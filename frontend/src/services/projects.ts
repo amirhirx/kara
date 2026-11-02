@@ -117,3 +117,78 @@ export const unArchiveProject = async ({ id }: { id: string }) => {
     return null;
   }
 };
+
+export const getProjectMembers = async ({ id }: { id: string }) => {
+  try {
+    const endpoint = `http://localhost:3000/api/projects/${id}/members`;
+    const res = await fetch(endpoint, {
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+    return res.json();
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const inviteMember = async ({
+  id,
+  email,
+}: {
+  id: string;
+  email: string;
+}) => {
+  try {
+    const endpoint = `http://localhost:3000/api/projects/${id}/members`;
+    const res = await fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ email }),
+    });
+
+    return res.json();
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const removeMember = async ({
+  id,
+  userId,
+}: {
+  id: string;
+  userId: string;
+}) => {
+  try {
+    const endpoint = `http://localhost:3000/api/projects/${id}/members/${userId}`;
+    const res = await fetch(endpoint, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+
+    return res.json();
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const leaveProject = async ({ id }: { id: string }) => {
+  try {
+    const endpoint = `http://localhost:3000/api/projects/${id}/leave`;
+    const res = await fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+
+    return res.json();
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
